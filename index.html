@@ -4,23 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AP - Weather App</title>
+    <!-- Google Fonts Files -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- JQuery Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
-  <body>
+  <body class="roboto-font-400">
     <header>
       <h1>Weather Dashboard</h1>
-      <nav>
-        <!-- Dropdown -->
-      </nav>
+      <div class="dropdown">
+        <button id="dropdownButton" class="dropbtn">Quick Links</button>
+        <div id="myDropdown" class="dropdown-content">
+          <button class="content-button" data-location="atlanta,GA">
+            Atlanta
+          </button>
+          <button class="content-button" data-location="London,England,GB">
+            London
+          </button>
+          <button class="content-button" data-location="Tulsa,OK">Tulsa</button>
+        </div>
+      </div>
     </header>
     <main>
       <section class="user-input">
+        <label for="locationInput">Enter Location:</label>
+        <input
+          id="locationInput"
+          maxlength="40"
+          type="text"
+          placeholder="Location..."
+        />
+        <div class="search-button-section">
+          <button class="search-button">Search</button>
+        </div>
         <!-- Ask User for input -->
       </section>
       <section class="weather-section">
+        <h3>5-day Forecast</h3>
+        <div class="weather-window">
+          <!-- Start of Weather Info -->
+          <div class="weather-info">
+            <h4>Monday</h4>
+            <img
+              src="https://openweathermap.org/img/wn/10d@2x.png"
+              width="100px"
+              alt="weather icon"
+            />
+            <h4>High / Low</h4>
+            <span id="temp-high">60&deg;F</span>
+            <hr width="100%" style="padding: 0; margin: 0" />
+            <span id="temp-low">40&deg;F</span>
+          </div>
+          <!-- Start of Weather Info -->
+          <div class="weather-info">
+            <h4>Monday</h4>
+            <img
+              src="https://openweathermap.org/img/wn/10d@2x.png"
+              width="100px"
+              alt="weather icon"
+            />
+            <h4>High / Low</h4>
+            <span id="temp-high">60&deg;F</span>
+            <hr width="100%" style="padding: 0; margin: 0" />
+            <span id="temp-low">40&deg;F</span>
+          </div>
+          <!-- Start of Weather Info -->
+          <div class="weather-info">
+            <h4>Monday</h4>
+            <img
+              src="https://openweathermap.org/img/wn/10d@2x.png"
+              width="100px"
+              alt="weather icon"
+            />
+            <h4>High / Low</h4>
+            <span id="temp-high">60&deg;F</span>
+            <hr width="100%" style="padding: 0; margin: 0" />
+            <span id="temp-low">40&deg;F</span>
+          </div>
+          <!-- Start of Weather Info -->
+          <div class="weather-info">
+            <h4>Monday</h4>
+            <img
+              src="https://openweathermap.org/img/wn/10d@2x.png"
+              width="100px"
+              alt="weather icon"
+            />
+            <h4>High / Low</h4>
+            <span id="temp-high">60&deg;F</span>
+            <hr width="100%" style="padding: 0; margin: 0" />
+            <span id="temp-low">40&deg;F</span>
+          </div>
+          <!-- Start of Weather Info -->
+          <div class="weather-info">
+            <h4>Monday</h4>
+            <img
+              src="https://openweathermap.org/img/wn/10d@2x.png"
+              width="100px"
+              alt="weather icon"
+            />
+            <h4>High / Low</h4>
+            <span id="temp-high">60&deg;F</span>
+            <hr width="100%" style="padding: 0; margin: 0" />
+            <span id="temp-low">40&deg;F</span>
+          </div>
+        </div>
         <!-- Displey user inputted info -->
       </section>
     </main>
+
+    <script src="./assets/js/weatherApp.js"></script>
   </body>
 </html>

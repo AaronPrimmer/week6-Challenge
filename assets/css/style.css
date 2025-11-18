@@ -1,0 +1,195 @@
+.roboto-font-400 {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+body {
+  background-color: hsl(240, 73%, 30%);
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: hsl(0, 0%, 93%);
+  padding: 20px 10px;
+  max-width: 100%;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+/* Dropdown Button */
+.dropbtn,
+.search-button {
+  background-color: hsl(204, 70%, 53%);
+  color: white;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-right: 40px;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus,
+.search-button:hover,
+.search-button:active {
+  background-color: #2980b9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #cfcfcf;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 10px;
+  margin-top: 10px;
+  right: 15px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.content-button {
+  color: black;
+  padding: 12px 16px;
+  font-size: 1em;
+  display: block;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.content-button:hover {
+  color: white;
+  background-color: rgb(189, 189, 189);
+}
+
+.content-button:active {
+  color: hsl(204, 70%, 53%);
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  margin-top: 40px;
+  gap: 2em;
+}
+
+.user-input {
+  padding: 50px;
+  background-color: hsl(0, 0%, 93%);
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: start;
+  justify-content: start;
+}
+
+.user-input input {
+  height: 40px;
+  width: 275px;
+  border: gray;
+  box-shadow: 0 0 5px rgb(110, 110, 110);
+  padding: 2px 10px;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+.search-button-section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-button {
+  margin: 0;
+  width: 100%;
+}
+
+.weather-section {
+  padding: 50px;
+  background-color: hsl(0, 0%, 93%);
+  border-radius: 10px;
+}
+
+.weather-section h3 {
+  margin-bottom: 10px;
+}
+
+.weather-window {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.weather-info {
+  font-size: 1.2em;
+  background-color: hsl(204, 70%, 53%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 0.4em;
+}
+
+#temp-high {
+  margin: 10px 0 0 0;
+}
+
+#temp-low {
+  margin: 0;
+  padding: 0;
+}
