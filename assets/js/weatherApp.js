@@ -1,5 +1,3 @@
-// 302ff92903c2ba00d278ede0dfef75a9
-
 const GEO_DEFAULT = {
   0: { name: "London" },
   country: "GB",
