@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: darkblue;
+  background-color: rgb(186, 186, 186);
   background-repeat: repeat-y;
   background-position: center center;
   background-size: cover;
@@ -76,7 +76,7 @@ h4 {
   display: none;
   position: absolute;
   background-color: #cfcfcf;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 10px;
@@ -204,6 +204,9 @@ main {
   font-size: 1em;
   border-radius: 10px;
 }
+.input-section input:focus {
+  border: 2px solid hsl(204, 70%, 53%);
+}
 
 .input-section label {
   color: hsl(0, 0%, 90%);
@@ -234,6 +237,7 @@ main {
   justify-content: space-evenly;
   align-items: start;
   gap: 2em;
+  box-shadow: 0 0 5px black;
 }
 
 .weather-section h3 {
@@ -248,6 +252,7 @@ main {
 .weather-window {
   display: flex;
   width: 100%;
+  min-height: 250px;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
@@ -269,6 +274,26 @@ main {
   gap: 0.4em;
   width: 150px;
   max-width: 232px;
+  animation: slide-up 1s forwards ease-in-out;
+}
+
+.current-wind-and-humidity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .weather-info:hover {
@@ -286,6 +311,15 @@ main {
 #temp-low {
   margin: 0;
   padding: 0;
+}
+
+.wind-and-humidity {
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6em;
 }
 
 @media only screen and (max-width: 940px) {
