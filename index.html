@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- JQuery Files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Day js files -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   </head>
   <body class="roboto-font-400">
     <header>
@@ -30,26 +32,42 @@
         </div>
       </div>
     </header>
+    <!-- Main Section -->
     <main>
       <section class="user-input">
-        <label for="locationInput">Enter Location:</label>
-        <input
-          id="locationInput"
-          maxlength="40"
-          type="text"
-          placeholder="Location..."
-        />
-        <div class="search-button-section">
-          <button class="search-button">Search</button>
+        <div class="current-weather-section">
+          <div class="current-location" id="currentLocation">
+            Fort Lauderdale, FL
+          </div>
+          <div class="weather-and-time">
+            <div class="current-weather-degrees" id="currentWeatherTemp">
+              70&deg;F
+            </div>
+            <div class="current-time" id="currentTime"></div>
+          </div>
+          <div class="current-date" id="currentDate"></div>
         </div>
+        <div class="input-section">
+          <label for="locationInput">Enter Location:</label>
+          <input
+            id="locationInput"
+            maxlength="40"
+            type="text"
+            placeholder="Location..."
+          />
+          <div class="search-button-section">
+            <button class="search-button">Search</button>
+          </div>
+        </div>
+
         <!-- Ask User for input -->
       </section>
       <section class="weather-section">
         <h3>5-day Forecast</h3>
-        <div class="weather-window">
+        <div class="weather-window" id="weatherWindow">
           <!-- Start of Weather Info -->
           <div class="weather-info">
-            <h4>Monday</h4>
+            <h4 class="forecast-day">Monday</h4>
             <img
               src="https://openweathermap.org/img/wn/10d@2x.png"
               width="100px"
@@ -62,7 +80,7 @@
           </div>
           <!-- Start of Weather Info -->
           <div class="weather-info">
-            <h4>Monday</h4>
+            <h4 class="forecast-day">Monday</h4>
             <img
               src="https://openweathermap.org/img/wn/10d@2x.png"
               width="100px"
@@ -75,7 +93,7 @@
           </div>
           <!-- Start of Weather Info -->
           <div class="weather-info">
-            <h4>Monday</h4>
+            <h4 class="forecast-day">Monday</h4>
             <img
               src="https://openweathermap.org/img/wn/10d@2x.png"
               width="100px"
@@ -88,7 +106,7 @@
           </div>
           <!-- Start of Weather Info -->
           <div class="weather-info">
-            <h4>Monday</h4>
+            <h4 class="forecast-day">Monday</h4>
             <img
               src="https://openweathermap.org/img/wn/10d@2x.png"
               width="100px"
@@ -101,7 +119,7 @@
           </div>
           <!-- Start of Weather Info -->
           <div class="weather-info">
-            <h4>Monday</h4>
+            <h4 class="forecast-day">Monday</h4>
             <img
               src="https://openweathermap.org/img/wn/10d@2x.png"
               width="100px"
