@@ -502,6 +502,8 @@ function loadLocalWeatherMap(forecastMap) {
     currentHumidity.text(
       `Humidity: ${Math.round(forecastMap.list[0].main.humidity)}%`
     );
+
+    getForecastData(forecastMap.list);
     //console.log(Math.round(forecastMap.current.temp_f));
 
     // weatherWindow.html("");
@@ -609,6 +611,12 @@ function checkCurrentWeather(weatherCheck) {
 //   }
 // }
 
+// Sift through data and return a dictionary with highs, lows and info
+function getForecastData(forecastData) {
+  // Go through and find the next days lows and highs
+  console.log("Forecast Data: ", forecastData);
+}
+
 // Fetches the geo code of the entered city
 function fetchGeoCode(cityName) {
   fetch(`${GEO_CODE}?q=${encodeURIComponent(cityName)}${LIMIT}${WEATHER_MAP}`)
@@ -619,7 +627,7 @@ function fetchGeoCode(cityName) {
       return response.json();
     })
     .then(function (data) {
-      console.log("Geo data: ", data[0]);
+      //console.log("Geo data: ", data[0]);
       let cityInfo = {
         lat: data[0].lat,
         long: data[0].lon,
@@ -630,7 +638,7 @@ function fetchGeoCode(cityName) {
       currentCitySearch = data[0].name;
       currentCityRegion = data[0].state;
 
-      console.log(cityInfo);
+      //console.log(cityInfo);
 
       getWeather(cityInfo);
     })
@@ -686,7 +694,7 @@ function getLocationDataFromQuickLinks(event) {
     //fetchWeather(targetButton.data("location"));
     fetchGeoCode(targetButton.data("location"));
   }
-  console.log(targetButton.data("location"));
+  //console.log(targetButton.data("location"));
 }
 
 // Adds event to listen for quick links press
