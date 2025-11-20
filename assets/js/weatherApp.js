@@ -322,10 +322,10 @@ function returnForecastBox(forecast) {
 
 // Runs a set interval for the clock and the date
 function startClockAndDate() {
-  currentTimeEl.text(`${dayjs().format("h:mm a")} ET`);
+  currentTimeEl.text(dayjs().format("h:mm a"));
   currentDateEl.text(dayjs().format("dddd MMMM D, YYYY"));
   intervalForTime = setInterval(function () {
-    currentTimeEl.text(`${dayjs().format("h:mm a")} ET`);
+    currentTimeEl.text(dayjs().format("h:mm a"));
     currentDateEl.text(dayjs().format("dddd MMMM D, YYYY"));
   }, 1000);
 }
