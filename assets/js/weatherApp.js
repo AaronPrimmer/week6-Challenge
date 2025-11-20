@@ -503,7 +503,13 @@ function loadLocalWeatherMap(forecastMap) {
       `Humidity: ${Math.round(forecastMap.list[0].main.humidity)}%`
     );
 
-    getForecastData(forecastMap.list);
+    let forecastFive = getForecastData(forecastMap.list);
+
+    weatherWindow.html("");
+    for (let daily of forecastFive) {
+      const dayBox = returnForecastBox(daily);
+      weatherWindow.append(dayBox);
+    }
     //console.log(Math.round(forecastMap.current.temp_f));
 
     // weatherWindow.html("");
@@ -613,8 +619,55 @@ function checkCurrentWeather(weatherCheck) {
 
 // Sift through data and return a dictionary with highs, lows and info
 function getForecastData(forecastData) {
+  const dateFormat = "M-D-YYYY H:00";
+
   // Go through and find the next days lows and highs
-  console.log("Forecast Data: ", forecastData);
+  //console.log("Forecast Data: ", forecastData);
+  let fiveDayForecast = [];
+
+  for (i = 0; i < 5; i++) {
+    let todaysAM = dayjs()
+      .add(1, "day")
+      .startOf("day")
+      .add(3, "hour")
+      .add(i, "day")
+      .format(dateFormat);
+    let todaysPM = dayjs(todaysAM).add(12, "hour").format(dateFormat);
+    let highTemp = forecastData[0].main.temp;
+    let lowTemp = forecastData[0].main.temp;
+    let windForecast = 0;
+    let humidityForecast = 0;
+    let dayOfWeek = dayjs(todaysPM).format("dddd");
+    let icon = "02d";
+
+    forecastData.forEach((element) => {
+      //console.log("Element: ", element);
+      let forecastToCheck = dayjs(element.dt_txt).format(dateFormat);
+      // console.log("ForecastToCheck:", forecastToCheck);
+      // console.log("TodaysAM:", todaysAM);
+      // console.log("TodaysPM:", todaysPM);
+      // console.log("-----------------");
+      if (forecastToCheck == todaysAM) {
+        lowTemp = Math.floor(element.main.temp_min);
+      } else if (forecastToCheck == todaysPM) {
+        highTemp = Math.ceil(element.main.temp_max);
+        windForecast = Math.ceil(element.wind.speed);
+        humidityForecast = Math.ceil(element.main.humidity);
+        icon = element.weather[0].icon;
+      }
+    });
+
+    fiveDayForecast[i] = {
+      day: dayOfWeek,
+      high: highTemp,
+      low: lowTemp,
+      wind: windForecast,
+      humidity: humidityForecast,
+      icon: icon,
+    };
+  }
+  console.log("Forecast Data: ", fiveDayForecast);
+  return fiveDayForecast;
 }
 
 // Fetches the geo code of the entered city
@@ -651,25 +704,45 @@ function fetchGeoCode(cityName) {
 function returnForecastBox(forecast) {
   return `
           <div class="weather-info">
-            <h4 class="forecast-day">${dayjs(forecast.date).format("dddd")}</h4>
+            <h4 class="forecast-day">${forecast.day}</h4>
             <img
-              src="https:${forecast.day.condition.icon}"
+              src="https://openweathermap.org/img/wn/${forecast.icon}@2x.png"
               width="100px"
               alt="weather icon"
             />
-            <span id="temp-high" class="temp-forecast">${Math.round(
-              forecast.day.maxtemp_f
-            )}&deg;F</span>
+            <span id="temp-high" class="temp-forecast">${forecast.high}&deg;F</span>
             <hr width="60%" style="padding: 0; margin: 0" />
-            <span id="temp-low" class="temp-forecast">${Math.round(
-              forecast.day.mintemp_f
-            )}&deg;F</span>
+            <span id="temp-low" class="temp-forecast">${forecast.low}&deg;F</span>
             <div class="wind-and-humidity">
-              <div>Wind: ${Math.round(forecast.day.maxwind_mph)} mph</div>
-              <div>Humidity: ${Math.round(forecast.day.avghumidity)}%</div>
+              <div>Wind: ${forecast.wind} mph</div>
+              <div>Humidity: ${forecast.humidity}%</div>
             </div>
           </div>`;
 }
+
+// Returns a weather forecast box
+// function returnForecastBox(forecast) {
+//   return `
+//           <div class="weather-info">
+//             <h4 class="forecast-day">${dayjs(forecast.date).format("dddd")}</h4>
+//             <img
+//               src="https:${forecast.day.condition.icon}"
+//               width="100px"
+//               alt="weather icon"
+//             />
+//             <span id="temp-high" class="temp-forecast">${Math.round(
+//               forecast.day.maxtemp_f
+//             )}&deg;F</span>
+//             <hr width="60%" style="padding: 0; margin: 0" />
+//             <span id="temp-low" class="temp-forecast">${Math.round(
+//               forecast.day.mintemp_f
+//             )}&deg;F</span>
+//             <div class="wind-and-humidity">
+//               <div>Wind: ${Math.round(forecast.day.maxwind_mph)} mph</div>
+//               <div>Humidity: ${Math.round(forecast.day.avghumidity)}%</div>
+//             </div>
+//           </div>`;
+// }
 
 // Runs a set interval for the clock and the date
 function startClockAndDate() {
