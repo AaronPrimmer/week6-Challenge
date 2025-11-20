@@ -8,6 +8,7 @@
 
 body {
   background-color: rgb(186, 186, 186);
+  background-image: url("../images/sunnyDay.jpg");
   background-repeat: repeat-y;
   background-position: center center;
   background-size: cover;
@@ -129,7 +130,7 @@ main {
   justify-content: start;
   align-items: center;
   margin-top: 40px;
-  gap: 6em;
+  gap: 4em;
   height: 80vh;
 }
 

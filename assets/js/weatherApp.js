@@ -50,25 +50,13 @@ const stateList = {
   Wisconsin: "WI",
   Wyoming: "WY",
 };
-// https://api.openweathermap.org/geo/1.0/direct?q=Miami&limit=1&appid=302ff92903c2ba00d278ede0dfef75a9
-// https://api.openweathermap.org/data/2.5/forecast?lat=51.5073219&lon=-0.1276474&appid=302ff92903c2ba00d278ede0dfef75a9&units=imperial
-const GEO_CITY = "q=London";
+
 const LIMIT = "&limit=1";
 const WEATHER_MAP = "&appid=302ff92903c2ba00d278ede0dfef75a9";
 const GEO_CODE = "http://api.openweathermap.org/geo/1.0/direct";
-const WEATHER_LINK = "https://api.openweathermap.org/data/2.5/weather";
 const FORECAST_LINK = "https://api.openweathermap.org/data/2.5/forecast";
 const UNITS = "&units=imperial";
 const COUNT = "&cnt=15";
-const WEATHER_ICON_LINK = "https://openweathermap.org/img/wn/10d@2x.png";
-
-// "lat": 51.5073219,
-//     "lon": -0.1276474,
-
-const WEATHER_FORECAST = "http://api.weatherapi.com/v1/forecast.json";
-const WEATHER_API = "&key=6fa45def5f924faba18122047251611";
-const WEATHER_CITY = "q=FORT+LAUDERDALE,FL";
-const WEATHER_DAYS = "&days=5";
 const STORAGE_KEY = "searchCities";
 const DEFAULT_CITY = "Fort Lauderdale, FL";
 let searchInfo = [];
@@ -147,9 +135,11 @@ function getWeather(cityToCall) {
       return response.json();
     })
     .then(function (data) {
-      console.log("Data: ", data);
-      loadLocalWeatherMap(data);
-      saveSearchToStorage(currentCitySearch);
+      if (data.cod == 200) {
+        //console.log("Data: ", data);
+        loadLocalWeatherMap(data);
+        saveSearchToStorage(currentCitySearch);
+      }
     })
     .catch(function (error) {
       console.log(`Error: ${error}`);
@@ -159,20 +149,10 @@ function getWeather(cityToCall) {
 // Loads the local weather into the  current temp display
 function loadLocalWeatherMap(forecastMap) {
   if (forecastMap) {
-    const currentHour = parseInt(dayjs().format("H"));
-    if (currentHour < 6 || currentHour > 21) {
-      bodyEl.css("background-image", 'url("assets/images/moon.jpg")');
-    } else {
-      // console.log(
-      //   "Condition: ",
-      //   forecastMap.current.condition.text.toLowerCase()
-      // );
-      const weatherCheck = checkCurrentWeather(
-        forecastMap.list[0].weather[0].main.toLowerCase()
-      );
-      bodyEl.css("background-image", `url(${weatherCheck})`);
-    }
-    // let locationRegion = forecastMap.location.region.split(",");
+    const weatherCheck = checkCurrentWeather(
+      forecastMap.list[0].weather[0].main.toLowerCase()
+    );
+    bodyEl.css("background-image", `url(${weatherCheck})`);
     currentLocation.text(
       `${currentCitySearch}, ${
         stateList[currentCityRegion]
@@ -238,47 +218,55 @@ function getForecastData(forecastData) {
   const dateFormat = "M-D-YYYY H:00";
 
   // Go through and find the next days lows and highs
-  //console.log("Forecast Data: ", forecastData);
   let fiveDayForecast = [];
 
   for (i = 0; i < 5; i++) {
     let todaysAM = dayjs()
       .add(1, "day")
       .startOf("day")
-      .add(3, "hour")
       .add(i, "day")
       .format(dateFormat);
     let todaysPM = dayjs(todaysAM).add(12, "hour").format(dateFormat);
-    let highTemp = forecastData[0].main.temp;
-    let lowTemp = forecastData[0].main.temp;
+    let highTemp = -100;
+    let lowTemp = 100;
     let windForecast = 0;
     let humidityForecast = 0;
     let dayOfWeek = dayjs(todaysPM).format("dddd");
     let icon = "02d";
 
+    // Go through each array object and find highs and lows
     forecastData.forEach((element) => {
-      //console.log("Element: ", element);
       let forecastToCheck = dayjs(element.dt_txt).format(dateFormat);
-      if (forecastToCheck == todaysAM) {
-        lowTemp = Math.floor(element.main.temp_min);
-      } else if (forecastToCheck == todaysPM) {
-        highTemp = Math.ceil(element.main.temp_max);
-        windForecast = Math.ceil(element.wind.speed);
-        humidityForecast = Math.ceil(element.main.humidity);
-        icon = element.weather[0].icon;
+      if (forecastToCheck == todaysPM) {
+        icon = element.weather[0].icon.replace("n", "d");
+      }
+      let tommorowCheck = dayjs(todaysAM).format("M-D-YYYY");
+      if (tommorowCheck == dayjs(element.dt_txt).format("M-D-YYYY")) {
+        if (Math.floor(element.main.temp_min) < lowTemp) {
+          lowTemp = Math.floor(element.main.temp_min);
+        }
+        if (Math.ceil(element.main.temp_max) > highTemp) {
+          highTemp = Math.ceil(element.main.temp_max);
+        }
+        if (Math.ceil(element.wind.speed) > windForecast) {
+          windForecast = Math.ceil(element.wind.speed);
+        }
+        if (Math.ceil(element.main.humidity) > windForecast) {
+          humidityForecast = Math.ceil(element.main.humidity);
+        }
       }
     });
 
     fiveDayForecast[i] = {
       day: dayOfWeek,
-      high: highTemp,
-      low: lowTemp,
+      high: highTemp > lowTemp ? highTemp : lowTemp,
+      low: lowTemp < highTemp ? lowTemp : highTemp,
       wind: windForecast,
       humidity: humidityForecast,
       icon: icon,
     };
   }
-  console.log("Forecast Data: ", fiveDayForecast);
+  //console.log("Forecast Data: ", fiveDayForecast);
   return fiveDayForecast;
 }
 
@@ -363,7 +351,7 @@ $(document).on("click", ".content-button", function (event) {
 
 // Adds event listener to search button
 searchButtonEl.on("click", function (event) {
-  let cityToSearch = locationInput.val().trim();
+  let cityToSearch = locationInput.val().trim().split(",")[0];
   if (cityToSearch) {
     fetchGeoCode(cityToSearch);
   }
