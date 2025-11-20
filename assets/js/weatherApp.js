@@ -53,7 +53,7 @@ const stateList = {
 
 const LIMIT = "&limit=1";
 const WEATHER_MAP = "&appid=302ff92903c2ba00d278ede0dfef75a9";
-const GEO_CODE = "http://api.openweathermap.org/geo/1.0/direct";
+const GEO_CODE = "https://api.openweathermap.org/geo/1.0/direct";
 const FORECAST_LINK = "https://api.openweathermap.org/data/2.5/forecast";
 const UNITS = "&units=imperial";
 const COUNT = "&cnt=15";
